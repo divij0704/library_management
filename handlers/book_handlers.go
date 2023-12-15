@@ -59,5 +59,86 @@ func GetBooks(c *gin.Context) {
 	c.JSON(http.StatusOK, books)
 }
 
+// GetBookByID retrieves a book by ID
+func GetBookByID(c *gin.Context) {
+	idStr := c.Param("id")
+	id, err := primitive.ObjectIDFromHex(idStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid book ID"})
+		return
+	}
+
+	var book models.Book
+	db := getDB(c)
+	err = db.Collection("books").FindOne(context.Background(), bson.M{"_id": id}).Decode(&book)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Book not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, book)
+}
 
 
+// UpdateBook updates a book by ID
+func UpdateBook(c *gin.Context) {
+	idStr := c.Param("id")
+	id, err := primitive.ObjectIDFromHex(idStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid book ID"})
+		return
+	}
+
+	var updatedBook models.Book
+	err = c.ShouldBindJSON(&updatedBook)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JSON data"})
+		return
+	}
+
+	db := getDB(c)
+	if db == nil {
+		return
+	}
+
+	result, err := db.Collection("books").UpdateOne(
+		context.Background(),
+		bson.M{"_id": id},
+		bson.M{"$set": updatedBook},
+	)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update book"})
+		return
+	}
+
+	if result.ModifiedCount == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Book not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, updatedBook)
+}
+
+// DeleteBook deletes a book by ID
+func DeleteBook(c *gin.Context) {
+	idStr := c.Param("id")
+	id, err := primitive.ObjectIDFromHex(idStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid book ID"})
+		return
+	}
+
+	db := getDB(c)
+	result, err := db.Collection("books").DeleteOne(context.Background(), bson.M{"_id": id})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete book"})
+		return
+	}
+
+	if result.DeletedCount == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Book not found"})
+		return 
+	}
+
+	c.Status(http.StatusNoContent)
+}
