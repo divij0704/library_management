@@ -142,3 +142,14 @@ func DeleteBook(c *gin.Context) {
 
 	c.Status(http.StatusNoContent)
 }
+
+// getDB retrieves the MongoDB client from the context
+func getDB(c *gin.Context) *mongo.Database {
+	client, exists := c.Get("mongoClient")
+	if !exists {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Database connection not available"})
+		return nil
+	}
+
+	return client.(*mongo.Client).Database("library_management")
+}
