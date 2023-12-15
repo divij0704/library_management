@@ -35,3 +35,29 @@ func CreateBook(c *gin.Context) {
 	c.JSON(http.StatusCreated, book)
 }
 
+// GetBooks retrieves a list of all books
+func GetBooks(c *gin.Context) {
+	var books []models.Book
+	db := getDB(c)
+
+	cursor, err := db.Collection("books").Find(context.Background(), bson.M{})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch books"})
+		return
+	}
+	defer cursor.Close(context.Background())
+
+	for cursor.Next(context.Background()) {
+		var book models.Book
+		if err := cursor.Decode(&book); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to decode book"})
+			return
+		}
+		books = append(books, book)
+	}
+
+	c.JSON(http.StatusOK, books)
+}
+
+
+
