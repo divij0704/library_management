@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"library_management/models"
+
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -79,7 +80,6 @@ func GetBookByID(c *gin.Context) {
 	c.JSON(http.StatusOK, book)
 }
 
-
 // UpdateBook updates a book by ID
 func UpdateBook(c *gin.Context) {
 	idStr := c.Param("id")
@@ -137,7 +137,7 @@ func DeleteBook(c *gin.Context) {
 
 	if result.DeletedCount == 0 {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Book not found"})
-		return 
+		return
 	}
 
 	c.Status(http.StatusNoContent)
