@@ -15,16 +15,16 @@ Steps to run the project:
 3. Configuring MongoDB: Start your MongoDB server locally using the default string -              mongodb://localhost:27017
 4. Running the Project: Open the terminal and enter : go run main.go
 5. The API is now running. You can access it using a tool like Postman or your web browser.
-   API Endpoints:
-    1.Create a Book:
-    Endpoint: POST http://localhost:8080/books
-    Body: Provide the book details in JSON format.
-    2.Get All Books:
-    Endpoint: GET http://localhost:8080/books
-    3.Get a Book by ID:
-    Endpoint: GET http://localhost:8080/books/{id}
-    4.Update a Book by ID:
-    Endpoint: PUT http://localhost:8080/books/{id}
-    Body: Provide the updated book details in JSON format.
-    5.Delete a Book by ID:
-    Endpoint: DELETE http://localhost:8080/books/{id}
+API Endpoints:
+1.Create a Book:
+Endpoint: POST http://localhost:8080/books
+Body: Provide the book details in JSON format.
+2.Get All Books:
+Endpoint: GET http://localhost:8080/books
+3.Get a Book by ID:
+Endpoint: GET http://localhost:8080/books/{id}
+4.Update a Book by ID:
+Endpoint: PUT http://localhost:8080/books/{id}
+Body: Provide the updated book details in JSON format.
+5.Delete a Book by ID:
+Endpoint: DELETE http://localhost:8080/books/{id}
