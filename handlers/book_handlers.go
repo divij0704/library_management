@@ -29,6 +29,7 @@ func CreateBook(c *gin.Context) {
 
 	_, err = db.Collection("books").InsertOne(context.Background(), book)
 	if err != nil {
+		log.Println("Error inserting book:", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to insert book"})
 		return
 	}
