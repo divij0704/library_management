@@ -74,6 +74,8 @@ func TestBookHandlers(t *testing.T) {
 		// Serve the HTTP request to the ResponseRecorder
 		router.ServeHTTP(rr, req)
 
+		fmt.Println(rr.Body.String())
+
 		// Check the status code
 		assert.Equal(t, http.StatusCreated, rr.Code)
 
