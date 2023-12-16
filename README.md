@@ -10,21 +10,26 @@ Steps to run the project:
    i. Clone the repository on your system 
    git clone https://github.com/divij0704/library_management.git
    cd library_management
+   
    ii.Install Dependencies: 
    go mod download
-3. Configuring MongoDB: Start your MongoDB server locally using the default string -              mongodb://localhost:27017
-4. Running the Project: Open the terminal and enter : go run main.go
-5. The API is now running. You can access it using a tool like Postman or your web browser.
+4. Configuring MongoDB: Start your MongoDB server locally using the default string -              mongodb://localhost:27017
+5. Running the Project: Open the terminal and enter : go run main.go
+6. The API is now running. You can access it using a tool like Postman or your web browser.
+   
 API Endpoints:
+
 1.Create a Book:
-Endpoint: POST http://localhost:8080/books
-Body: Provide the book details in JSON format.
+Endpoint: POST http://localhost:8080/books (provide the book details in JSON format)
+
 2.Get All Books:
 Endpoint: GET http://localhost:8080/books
+
 3.Get a Book by ID:
 Endpoint: GET http://localhost:8080/books/{id}
+
 4.Update a Book by ID:
-Endpoint: PUT http://localhost:8080/books/{id}
-Body: Provide the updated book details in JSON format.
+Endpoint: PUT http://localhost:8080/books/{id} (provide the book details in JSON format)
+
 5.Delete a Book by ID:
 Endpoint: DELETE http://localhost:8080/books/{id}
