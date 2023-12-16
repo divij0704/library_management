@@ -12,7 +12,7 @@ Steps to run the project:
             cd library_management
         ii.Install Dependencies: 
             go mod download
-    3. Configuring MongoDB: Start your MongoDB server locally using the default string - mongodb://localhost:27017
+    3. Configuring MongoDB: Start your MongoDB server locally using the default string -              mongodb://localhost:27017
     4. Running the Project: Open the terminal and enter : go run main.go
     5. The API is now running. You can access it using a tool like Postman or your web browser.
         API Endpoints:
