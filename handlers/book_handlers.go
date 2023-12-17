@@ -3,7 +3,9 @@ package handlers
 
 import (
 	"context"
+	"log"
 	"net/http"
+	"os"
 
 	"library_management/models"
 
@@ -144,8 +146,13 @@ func DeleteBook(c *gin.Context) {
 	c.Status(http.StatusNoContent)
 }
 
-// getDB retrieves the MongoDB client from the context
+var db *mongo.Database
+
 func getDB(c *gin.Context) *mongo.Database {
+	if os.Getenv("GIN_MODE") == "test" {
+		return db
+	}
+
 	client, exists := c.Get("mongoClient")
 	if !exists {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Database connection not available"})

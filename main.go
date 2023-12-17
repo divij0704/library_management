@@ -17,20 +17,18 @@ import (
 )
 
 func main() {
-	// Set up the MongoDB connection
+	// Setting up the MongoDB connection
 	client := initDB()
 	defer client.Disconnect(context.Background())
 
-	// Initialize the Gin router
 	router := gin.Default()
 
-	// Inject the MongoDB client into the context
 	router.Use(func(c *gin.Context) {
 		c.Set("mongoClient", client)
 		c.Next()
 	})
 
-	// Define API routes
+	//API routes
 	api := router.Group("/api/books")
 	{
 		api.POST("/", handlers.CreateBook)
@@ -40,7 +38,6 @@ func main() {
 		api.DELETE("/:id", handlers.DeleteBook)
 	}
 
-	// Run the server
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
@@ -49,7 +46,6 @@ func main() {
 }
 
 func initDB() *mongo.Client {
-	// Replace with your MongoDB connection string
 	uri := "mongodb://localhost:27017/library_management"
 
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
@@ -57,16 +53,13 @@ func initDB() *mongo.Client {
 		log.Fatal(err)
 	}
 
-	// Context with timeout to handle connection establishment
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	// Connect to MongoDB
 	if err := client.Connect(ctx); err != nil {
 		log.Fatal(err)
 	}
 
-	// Check the connection
 	err = client.Ping(ctx, nil)
 	if err != nil {
 		log.Fatal(err)
